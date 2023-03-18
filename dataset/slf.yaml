@@ -1,7 +1,7 @@
 # Config file for Spotted Lantern Fly dataset
 # Update paths below to match images location
 
-path: /Users/zain/Desktop/SpottedLanternFly/dataset/slf
+path: /home/zain/SpottedLanternFly/dataset/slf
 train: images/train
 val: images/val
 test: images/test
