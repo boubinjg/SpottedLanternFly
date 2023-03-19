@@ -31,14 +31,19 @@ def Display():
         if q.empty() != True:
             frame = q.get()
             
-            infer_result = model.predict(frame, device=0)[0]
+            result = model.predict(frame, device=0)[0]
+            detections = sv.Detections.from_yolov8(result)
             box_annotator = sv.BoxAnnotator(
                 thickness=2,
                 text_thickness=2,
                 text_scale=1
             )
-            bbox = sv.Detections.from_yolov8(infer_result)
-            frame = box_annotator.annotate(scene=frame, detections=bbox)
+            labels = [
+                f"{model.model.names[class_id]} {confidence: 0.75f}"
+                for _, confidence, class_id, _
+                in detections
+            ]
+            frame = box_annotator.annotate(scene=frame, detections=detections)
 
             cv.imshow("frame1", frame)
         if cv.waitKey(1) & 0xFF == ord('q'):
